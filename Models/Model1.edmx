@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MiniProjectGTHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCourses">
+          <Key>
+            <PropertyRef Name="crId" />
+          </Key>
+          <Property Name="crId" Type="int" Nullable="false" />
+          <Property Name="Course_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fees" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCSJoin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="placementID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblPlacement">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="package" Type="int" />
+          <Property Name="Placement_date" Type="date" />
+        </EntityType>
+        <EntityType Name="tblRoleMgt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loginID" Type="int" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblRoles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblStudent">
+          <Key>
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="student_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="contact" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_tblCSJoin_tblCourses">
+          <End Role="tblCourses" Type="Self.tblCourses" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCourses">
+              <PropertyRef Name="crId" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCSJoin_tblPlacement">
+          <End Role="tblPlacement" Type="Self.tblPlacement" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPlacement">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="placementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCSJoin_tblStudent">
+          <End Role="tblStudent" Type="Self.tblStudent" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStudent">
+              <PropertyRef Name="Sid" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRoleMgt_tblLogin">
+          <End Role="tblLogin" Type="Self.tblLogin" Multiplicity="0..1" />
+          <End Role="tblRoleMgt" Type="Self.tblRoleMgt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLogin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblRoleMgt">
+              <PropertyRef Name="loginID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MiniProjectGTHModelStoreContainer">
+          <EntitySet Name="tblCourses" EntityType="Self.tblCourses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCSJoin" EntityType="Self.tblCSJoin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLogin" EntityType="Self.tblLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPlacement" EntityType="Self.tblPlacement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRoleMgt" EntityType="Self.tblRoleMgt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudent" EntityType="Self.tblStudent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblCSJoin_tblCourses" Association="Self.FK_tblCSJoin_tblCourses">
+            <End Role="tblCourses" EntitySet="tblCourses" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCSJoin_tblPlacement" Association="Self.FK_tblCSJoin_tblPlacement">
+            <End Role="tblPlacement" EntitySet="tblPlacement" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCSJoin_tblStudent" Association="Self.FK_tblCSJoin_tblStudent">
+            <End Role="tblStudent" EntitySet="tblStudent" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRoleMgt_tblLogin" Association="Self.FK_tblRoleMgt_tblLogin">
+            <End Role="tblLogin" EntitySet="tblLogin" />
+            <End Role="tblRoleMgt" EntitySet="tblRoleMgt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MiniProjectGTHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblCours">
+          <Key>
+            <PropertyRef Name="crId" />
+          </Key>
+          <Property Name="crId" Type="Int32" Nullable="false" />
+          <Property Name="Course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fees" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tblCSJoins" Relationship="Self.FK_tblCSJoin_tblCourses" FromRole="tblCourses" ToRole="tblCSJoin" />
+        </EntityType>
+        <EntityType Name="tblCSJoin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="placementID" Type="Int32" />
+          <NavigationProperty Name="tblCours" Relationship="Self.FK_tblCSJoin_tblCourses" FromRole="tblCSJoin" ToRole="tblCourses" />
+          <NavigationProperty Name="tblPlacement" Relationship="Self.FK_tblCSJoin_tblPlacement" FromRole="tblCSJoin" ToRole="tblPlacement" />
+          <NavigationProperty Name="tblStudent" Relationship="Self.FK_tblCSJoin_tblStudent" FromRole="tblCSJoin" ToRole="tblStudent" />
+        </EntityType>
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblRoleMgts" Relationship="Self.FK_tblRoleMgt_tblLogin" FromRole="tblLogin" ToRole="tblRoleMgt" />
+        </EntityType>
+        <EntityType Name="tblPlacement">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="package" Type="Int32" />
+          <Property Name="Placement_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblCSJoins" Relationship="Self.FK_tblCSJoin_tblPlacement" FromRole="tblPlacement" ToRole="tblCSJoin" />
+        </EntityType>
+        <EntityType Name="tblRoleMgt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loginID" Type="Int32" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLogin" Relationship="Self.FK_tblRoleMgt_tblLogin" FromRole="tblRoleMgt" ToRole="tblLogin" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblStudent">
+          <Key>
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="student_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contact" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCSJoins" Relationship="Self.FK_tblCSJoin_tblStudent" FromRole="tblStudent" ToRole="tblCSJoin" />
+        </EntityType>
+        <Association Name="FK_tblCSJoin_tblCourses">
+          <End Role="tblCourses" Type="Self.tblCours" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCourses">
+              <PropertyRef Name="crId" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCSJoin_tblPlacement">
+          <End Role="tblPlacement" Type="Self.tblPlacement" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPlacement">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="placementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCSJoin_tblStudent">
+          <End Role="tblStudent" Type="Self.tblStudent" Multiplicity="0..1" />
+          <End Role="tblCSJoin" Type="Self.tblCSJoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStudent">
+              <PropertyRef Name="Sid" />
+            </Principal>
+            <Dependent Role="tblCSJoin">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRoleMgt_tblLogin">
+          <End Role="tblLogin" Type="Self.tblLogin" Multiplicity="0..1" />
+          <End Role="tblRoleMgt" Type="Self.tblRoleMgt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLogin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblRoleMgt">
+              <PropertyRef Name="loginID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GHTPlacement" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCourses" EntityType="Self.tblCours" />
+          <EntitySet Name="tblCSJoins" EntityType="Self.tblCSJoin" />
+          <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
+          <EntitySet Name="tblPlacements" EntityType="Self.tblPlacement" />
+          <EntitySet Name="tblRoleMgts" EntityType="Self.tblRoleMgt" />
+          <EntitySet Name="tblRoles" EntityType="Self.tblRole" />
+          <EntitySet Name="tblStudents" EntityType="Self.tblStudent" />
+          <AssociationSet Name="FK_tblCSJoin_tblCourses" Association="Self.FK_tblCSJoin_tblCourses">
+            <End Role="tblCourses" EntitySet="tblCourses" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCSJoin_tblPlacement" Association="Self.FK_tblCSJoin_tblPlacement">
+            <End Role="tblPlacement" EntitySet="tblPlacements" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCSJoin_tblStudent" Association="Self.FK_tblCSJoin_tblStudent">
+            <End Role="tblStudent" EntitySet="tblStudents" />
+            <End Role="tblCSJoin" EntitySet="tblCSJoins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRoleMgt_tblLogin" Association="Self.FK_tblRoleMgt_tblLogin">
+            <End Role="tblLogin" EntitySet="tblLogins" />
+            <End Role="tblRoleMgt" EntitySet="tblRoleMgts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MiniProjectGTHModelStoreContainer" CdmEntityContainer="GHTPlacement">
+          <EntitySetMapping Name="tblCourses">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblCours">
+              <MappingFragment StoreEntitySet="tblCourses">
+                <ScalarProperty Name="crId" ColumnName="crId" />
+                <ScalarProperty Name="Course_name" ColumnName="Course_name" />
+                <ScalarProperty Name="fees" ColumnName="fees" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCSJoins">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblCSJoin">
+              <MappingFragment StoreEntitySet="tblCSJoin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="placementID" ColumnName="placementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLogins">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblLogin">
+              <MappingFragment StoreEntitySet="tblLogin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPlacements">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblPlacement">
+              <MappingFragment StoreEntitySet="tblPlacement">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="package" ColumnName="package" />
+                <ScalarProperty Name="Placement_date" ColumnName="Placement_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoleMgts">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblRoleMgt">
+              <MappingFragment StoreEntitySet="tblRoleMgt">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="loginID" ColumnName="loginID" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoles">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblRole">
+              <MappingFragment StoreEntitySet="tblRoles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudents">
+            <EntityTypeMapping TypeName="MiniProjectGTHModel.tblStudent">
+              <MappingFragment StoreEntitySet="tblStudent">
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="student_name" ColumnName="student_name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

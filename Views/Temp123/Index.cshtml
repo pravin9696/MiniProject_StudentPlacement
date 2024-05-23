@@ -1,0 +1,26 @@
+﻿@model MiniProject_StudentPlacement.Models.tblStudent
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table border="1">
+	<tr>
+		<td>@Html.Partial("_MyView")</td>
+		<td>@Html.Partial("_MyView")</td>
+	</tr>
+	<tr>
+		<td>@Html.Partial("_MyView")</td>
+		<td>@Html.Partial("_MyView")</td>
+	</tr>
+</table>
+-----------------------------------------------------------------------
+
+@Html.Partial("_studentDetails",Model)
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+﻿@model MiniProject_StudentPlacement.Models.validationModels.student_placement_combine
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@*@Html.Partial("_StudentView",Model.students)*@
+@{ 
+    Html.RenderPartial("_StudentView", Model.students);
+}
+<br />
+=====================================================================
+@*@Html.Partial("_placementView",Model.placements)*@
+@{ 
+    Html.RenderPartial("_placementView", Model.placements);
+}
+

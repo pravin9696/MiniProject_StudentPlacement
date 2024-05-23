@@ -1,0 +1,16 @@
+﻿@model MiniProject_StudentPlacement.Models.validationModels.student_placement_combine
+@{
+    ViewBag.Title = "ShowAll";
+}
+
+<h2>Show All Students and Placement List</h2>
+
+@{ 
+    Html.RenderPartial("_StudentView",Model.students);
+}
+====================================================================
+@{ 
+    Html.RenderPartial("_placementView",Model.placements);
+}
+
+
